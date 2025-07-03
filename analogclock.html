@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analog Digital Clock</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: gilroy;
+        }
+
+        body {
+            background-color: #0d0d0d;
+            /* dark black */
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            /* full screen height */
+        }
+        
+        .analog{
+            color: aqua;
+            font-size: 100px;
+            position: absolute;
+            top: 50px;
+            background: linear-gradient(90deg,white,blue,green,yellow,white);
+            transition: .5s;
+            -webkit-background-clip: text;
+            color: transparent;
+        }
+
+        .analog:hover{
+            font-size: 110px;
+        }
+
+        .clock {
+            display: flex;
+            gap: 20px;
+            background: linear-gradient(135deg, #1f1f1f, #292929);
+            padding: 30px 50px;
+            border-radius: 20px;
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.548);
+            /* neon shadow */
+            transition: 1s;
+            position: absolute;
+
+            &:hover{
+                box-shadow: 0 0 20px white;
+            }
+        }
+
+        .clock span {
+            cursor: pointer;
+            font-size: 60px;
+            font-weight: bold;
+            background: linear-gradient(45deg, cyan, blue);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+            transition: all .3s ease-in-out;
+
+            &:hover{
+                font-size: 62px;
+                background-color: grey;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .clock span {
+                font-size: 40px;
+                font-size: 40px;
+
+                &:hover{
+                font-size: 42px;
+                background-color: grey;
+                border-radius: 2px;
+                }
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="analog">
+        Digital Clock
+    </div>
+    <div class="clock">
+        <span class="hour">00</span><span class="min">00</span><span class="sec">00</span><span class="ampm">AM</span>
+    </div>
+    <script>
+        const hour = document.querySelector('.hour');
+        const min = document.querySelector('.min');
+        const sec = document.querySelector('.sec');
+        const pmam = document.querySelector('.ampm');
+
+        function updateClock() {
+            const now = new Date();
+            let hours = now.getHours();
+            let mins = now.getMinutes();
+            let secs = now.getSeconds();
+            let ampm = 'AM'
+            if (hours >= 12) {
+                ampm = 'PM';
+            } else {
+                ampm = 'AM';
+            }
+
+            hours = hours % 12;
+            hours = hours === 0 ? 12 : hours;
+
+            hours = hours < 10 ? "0" + hours : hours;
+            mins = mins < 10 ? "0" + mins : mins;
+            secs = secs < 10 ? "0" + secs : secs;
+
+            hour.textContent = hours;
+            min.textContent = mins;
+            sec.textContent = secs;
+            pmam.textContent = ampm
+        }
+        setInterval(updateClock, 1000);
+        updateClock();
+    </script>
+</body>
+
+</html>
